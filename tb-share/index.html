@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 6.25vw">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一个美好的心情</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no">
+    <style>
+        html {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+            height: 100%;
+            font-size: 6.25vw;
+        }
+
+        body {
+            margin: 0;
+            font-size: 0.56rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Seogoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
+            line-height: 1.6;
+            color: #888888;
+            background-color: #fff;
+
+            padding: 40vh 0.95rem 0;
+            letter-spacing: 0.06em;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .main {
+            border: 0.085rem solid #f17f73;
+            border-radius: 0.273rem;
+            padding: 1.1em 1em 0.9em;
+
+        }
+
+        .stress {
+            color: #f17f73;
+            text-align: center;
+        }
+
+        .c-btn {
+            background: #df7162;
+            color: white;
+            border: none;
+            display: block;
+            width: 100%;
+            height: 3.08em;
+            line-height: 3.08em;
+            padding: 0;
+            border-radius: 0.273rem;
+            margin-top: 1.32rem;
+            font-size: 0.56rem;
+        }
+
+        .c-btn.clicked {
+            background: #63c875;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <p>复制红框内信息打开→手淘APP←即可领优惠券￥<span id="q-code"></span>￥</p>
+        <p class="stress">点击 > 长按 > 全选 > 拷贝</p>
+    </div>
+    <button class="c-btn" data-clipboard-text="aaaa">一键复制</button>
+    <script src="./js/clipboard.min.js"></script>
+    <script>
+        function getParameter(param) {
+            var query = window.location.search;
+            var iLen = param.length;
+            var iStart = query.indexOf(param);
+            if (iStart == -1)
+                return "";
+            iStart += iLen + 1;
+            var iEnd = query.indexOf("&", iStart);
+            if (iEnd == -1)
+                return query.substring(iStart);
+            return query.substring(iStart, iEnd);
+        }
+        var qCode = getParameter('key');
+        document.getElementById('q-code').innerHTML = qCode;
+        var cBtn = document.querySelector('.c-btn');
+        cBtn.dataset['clipboardText'] = '￥' + qCode + '￥';
+        var clipboard = new Clipboard('.c-btn');
+        clipboard.on('success', function () {
+            cBtn.classList.add('clicked')
+            cBtn.innerHTML = '复制成功，打开【手淘】购买';
+        });
+    </script>
+</body>
+
+</html>

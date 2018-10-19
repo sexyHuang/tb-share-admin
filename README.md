@@ -25,3 +25,9 @@ yarn run build
 src/conf/user 为用户配置
 src/conf/configs 为其他配置（base path等）
 ```
+
+### PS：
+
+```
+tb-share 为前端页面文件
+```
