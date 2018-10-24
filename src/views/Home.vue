@@ -24,7 +24,13 @@
           <el-table-column prop="title" label="标题">
           </el-table-column>
           <el-table-column prop="code" width="800" label="地址" :formatter="addressFmt">
+            <div slot-scope="scope" class="address">
+              <span>{{addressFmt(scope.row)}}</span>
+              <el-button size="small" class="cb_btn" :data-clipboard-text="addressFmt(scope.row)">复制地址</el-button>
+
+            </div>
           </el-table-column>
+
         </el-table>
       </el-main>
     </el-container>
@@ -43,6 +49,7 @@
         <el-button type="primary" @click="add">确 定</el-button>
       </div>
     </el-dialog>
+
   </div>
 
 </template>
@@ -54,6 +61,7 @@ import { BASE_PATH } from '@/conf/configs.js';
 import { mapState } from 'vuex';
 import { logOut } from '@/common/login';
 import api from '@/api';
+import Clipboard from 'clipboard';
 export default {
   name: 'home',
 
@@ -62,6 +70,7 @@ export default {
       tableData: [],
       dialogFormVisible: false,
       formLabelWidth: '120px',
+
       form: {
         title: '',
         code: ''
@@ -78,6 +87,7 @@ export default {
     addressFmt(row) {
       return `${BASE_PATH}?key=${row.code.replace(/￥/g, '')}`;
     },
+
     async logout() {
       try {
         await this.$confirm('确认要退出登录吗？', '确认信息', {
@@ -110,6 +120,12 @@ export default {
   },
   async created() {
     this.tableData = await api.getList();
+  },
+  mounted() {
+    const clipboard = new Clipboard('.cb_btn');
+    clipboard.on('success', () => {
+      this.$message.success('复制成功');
+    });
   }
 };
 </script>
@@ -137,6 +153,14 @@ export default {
   &-name {
     padding-right: 10px;
   }
+}
+.address {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5% 0 0;
+}
+#clipboard {
+  display: none;
 }
 </style>
 

@@ -35,7 +35,7 @@
             border: 0.085rem solid #f17f73;
             border-radius: 0.273rem;
             padding: 1.1em 1em 0.9em;
-
+            
         }
 
         .stress {
@@ -55,10 +55,13 @@
             border-radius: 0.273rem;
             margin-top: 1.32rem;
             font-size: 0.56rem;
+            transition: all 0.3s ease-out;
         }
 
         .c-btn.clicked {
             background: #63c875;
+            pointer-events: none;
+            transition: none;
         }
     </style>
 </head>
@@ -91,6 +94,10 @@
         clipboard.on('success', function () {
             cBtn.classList.add('clicked')
             cBtn.innerHTML = '复制成功，打开【手淘】购买';
+            setTimeout(function(){
+                cBtn.classList.remove('clicked');
+                cBtn.innerHTML = '一键复制';
+            },2000)
         });
     </script>
 </body>
